@@ -1,0 +1,19 @@
+{
+    "name": "stockm",
+    "version": "1.0.1",
+    "description": "Stock managment app",
+    "main": "server.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node server.js"
+    },
+    "author": "Dhanavel R",
+    "license": "MIT",
+    "dependencies": {
+        "bcrypt-nodejs": "^0.0.3",
+        "dotenv": "^8.6.0",
+        "express": "^4.21.2",
+        "jsonwebtoken": "^9.0.2",
+        "mongoose": "^8.9.1"
+    }
+}
