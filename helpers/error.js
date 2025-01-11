@@ -1,4 +1,5 @@
 const handleError = (error,res) => {
+    console.log({error})
     if(error.is_error){
         return res.status(error.code).json({
             success: false,
