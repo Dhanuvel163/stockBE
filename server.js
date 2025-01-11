@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require("cors");
 require('dotenv').config();
 const app = express();
 const db = process.env.MONGO_URI;
@@ -15,7 +16,7 @@ if (db !== '[YOUR CONNECTION STRING HERE]') {
 // Express body parser
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
+app.use(cors());
 // Routes
 app.use('/', require('./api/api.js'));
 
