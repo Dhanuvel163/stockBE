@@ -1,5 +1,6 @@
 const Organization = require('../models/Organization');
 const {handleError} = require('../helpers/error')
+const jwt = require('jsonwebtoken')
 const SECRET = process.env.SECRET;
 
 exports.getOrganization = async (req, res, next) => {
