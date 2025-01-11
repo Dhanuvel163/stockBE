@@ -66,7 +66,8 @@ exports.organizationLogin = async (req, res, next) => {
         const token = jwt.sign({organization: organization}, SECRET, {expiresIn: '7d'});
         return res.status(200).json({
             success: true,
-            token: token
+            token: token,
+            organization
         })
     } catch (error) {
         handleError(error,res)
