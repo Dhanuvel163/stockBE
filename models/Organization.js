@@ -37,7 +37,6 @@ OrganizationSchema.pre('save', function(next) {
 });
 
 OrganizationSchema.methods.comparePassword = function(password) {
-  console.log({password,t:this.password})
   return bcrypt.compareSync(password, this.password);
 };
 
