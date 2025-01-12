@@ -20,7 +20,7 @@ exports.updateBrand = async (req, res, next) => {
     const {id:organization} = req.decoded
     const {name} = req.body
     try {
-        const brand = await Brand.findOne({id,organization});
+        const brand = await Brand.findOne({_id:id,organization});
         if (!brand) throw {is_error: true, code: 404, message: "Brand not found"}
         brand.set({name});
         const update = await brand.save();

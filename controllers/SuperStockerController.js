@@ -20,7 +20,7 @@ exports.updateSuperstocker = async (req, res, next) => {
     const {id:organization} = req.decoded
     const {name,address} = req.body
     try {
-        const superstocker = await Superstocker.findOne({id,organization});
+        const superstocker = await Superstocker.findOne({_id:id,organization});
         if (!superstocker) throw {is_error: true, code: 404, message: "Superstocker not found"}
         superstocker.set({name,address});
         const update = await superstocker.save();

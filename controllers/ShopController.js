@@ -20,7 +20,7 @@ exports.updateShop = async (req, res, next) => {
     const {id:organization} = req.decoded
     const {name,gstin,drug_license_no,food_license_no,contact,address} = req.body
     try {
-        const shop = await Shop.findOne({id,organization});
+        const shop = await Shop.findOne({_id:id,organization});
         if (!shop) throw {is_error: true, code: 404, message: "Shop not found"}
         shop.set({name,gstin,drug_license_no,food_license_no,contact,address});
         const update = await shop.save();

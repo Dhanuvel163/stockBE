@@ -20,7 +20,7 @@ exports.updateSale = async (req, res, next) => {
     const {id:organization} = req.decoded
     const {products,shop,salesman} = req.body
     try {
-        const sale = await Sale.findOne({id,organization});
+        const sale = await Sale.findOne({_id:id,organization});
         if (!sale) throw {is_error: true, code: 404, message: "Sale not found"}
         sale.set({products,shop,salesman});
         const update = await sale.save();
