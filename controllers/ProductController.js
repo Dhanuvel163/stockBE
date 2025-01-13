@@ -38,7 +38,7 @@ exports.updateProductById = async (req, res, next) => {
         const product = await Product.findOne({_id:id});
         if (!product) throw {is_error: true, code: 404, message: "Product not found"}
         product.set({name,brand,hsn_code,mrp,rate,cgst_percent,sgst_percent,profit_percent,rate_with_gst});
-        const update = await brand.save();
+        const update = await product.save();
         return res.status(200).json({
             success: true,
             data: update
