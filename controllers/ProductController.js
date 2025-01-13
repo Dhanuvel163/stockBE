@@ -1,10 +1,26 @@
 const Product = require('../models/Product');
+const Brand = require('../models/Brand');
 const {handleError} = require('../helpers/error')
 
 exports.getProductsByBrand = async (req, res, next) => {
     const {brand} = req.params
     try {
         const products = await Product.find({brand});
+        return res.status(200).json({
+            success: true,
+            count: products.length,
+            data: products
+        })
+    } catch (error) {
+        handleError(error,res)
+    }
+}
+
+exports.getProducts = async (req, res, next) => {
+    const {id} = req.decoded
+    try {
+        const brands = (await Brand.find({organization: id},'_id'))?.map((brand)=>brand._id);
+        const products = await Product.find({brand: {"$in":brands}}).populate("Brand");
         return res.status(200).json({
             success: true,
             count: products.length,

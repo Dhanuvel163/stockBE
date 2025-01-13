@@ -4,7 +4,7 @@ const router = express.Router();
 
 const { organizationLogin, createOrganization, getOrganization, updateOrganization } = require('../controllers/OrganizationController.js');
 const { addBrand, getBrands, updateBrand } = require('../controllers/BrandController.js');
-const { addProduct, getProductsByBrand, updateProductById } = require('../controllers/ProductController.js');
+const { addProduct, getProductsByBrand, updateProductById, getProducts } = require('../controllers/ProductController.js');
 const { addSalesman, getSalesmans, updateSalesman } = require('../controllers/SalesmanController.js');
 const { addShop, getShops, updateShop } = require('../controllers/ShopController.js');
 const { addSuperstocker, getSuperstockers, updateSuperstocker } = require('../controllers/SuperStockerController.js');
@@ -32,6 +32,7 @@ router.route('/getProductsByBrand/:brand')
 router.route('/product/:id')
     .put(auth,updateProductById);
 router.route('/product/')
+    .get(auth,getProducts)
     .post(auth,addProduct);
 
 router.route('/updateSalesman/:id')
