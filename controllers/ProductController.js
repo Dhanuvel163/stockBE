@@ -20,7 +20,7 @@ exports.getProducts = async (req, res, next) => {
     const {id} = req.decoded
     try {
         const brands = (await Brand.find({organization: id},'_id'))?.map((brand)=>brand._id);
-        const products = await Product.find({brand: {"$in":brands}}).populate("Brand");
+        const products = await Product.find({brand: {"$in":brands}}).populate("brand");
         return res.status(200).json({
             success: true,
             count: products.length,
