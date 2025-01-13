@@ -9,12 +9,7 @@ const SuperstockerSchema = new mongoose.Schema({
     ref: 'Organization',
     type: mongoose.Schema.Types.ObjectId,
   },
-  address: {
-    addr1: String,
-    addr2: String,
-    state: String,
-    postalCode: String
-  },
+  address: String,
 },{
   timestamps:true
 });
