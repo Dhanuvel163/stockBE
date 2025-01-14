@@ -57,8 +57,9 @@ router.route('/superstocker')
 router.route('/updatePurchase/:id')
     .put(auth,updatePurchase);
 router.route('/purchase')
-    .get(auth,getPurchases)
     .post(auth,addPurchase);
+router.route('/getPurchases')
+    .post(auth,getPurchases)
 
 router.route('/updateSale/:id')
     .put(auth,updateSale);
