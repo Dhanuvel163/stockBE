@@ -18,9 +18,20 @@ exports.getProductsByBrand = async (req, res, next) => {
 
 exports.getProducts = async (req, res, next) => {
     const {id} = req.decoded
+    const {name,brand} = req.body
     try {
-        const brands = (await Brand.find({organization: id},'_id'))?.map((brand)=>brand._id);
-        const products = await Product.find({brand: {"$in":brands}}).populate("brand");
+        const brands = (await Brand.find(
+            {
+                organization: id,
+                ...(brand ? { brand } : {})
+            },'_id')
+        )?.map((brand)=>brand._id);
+        const products = await Product.find(
+            {
+                brand: {"$in":brands},
+                ...(name ? { name: { $regex: `.*${name}.*`, $options: 'i' } } : {}),
+            }
+        ).populate("brand");
         return res.status(200).json({
             success: true,
             count: products.length,

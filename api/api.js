@@ -32,8 +32,9 @@ router.route('/getProductsByBrand/:brand')
 router.route('/product/:id')
     .put(auth,updateProductById);
 router.route('/product/')
-    .get(auth,getProducts)
     .post(auth,addProduct);
+router.route('/getProducts/')
+    .post(auth,getProducts)
 
 router.route('/updateSalesman/:id')
     .put(auth,updateSalesman);
