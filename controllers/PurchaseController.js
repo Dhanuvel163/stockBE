@@ -4,7 +4,7 @@ const {handleError} = require('../helpers/error')
 exports.getPurchases = async (req, res, next) => {
     const {id} = req.decoded
     try {
-        const purchases = await Purchase.find({organization: id});
+        const purchases = await Purchase.find({organization: id}).populate('super_stocker').populate('products.product');
         return res.status(200).json({
             success: true,
             count: purchases.length,
