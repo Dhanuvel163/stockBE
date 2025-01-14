@@ -23,7 +23,7 @@ exports.getProducts = async (req, res, next) => {
         const brands = (await Brand.find(
             {
                 organization: id,
-                ...(brand ? { brand } : {})
+                ...(brand ? { _id:brand } : {})
             },'_id')
         )?.map((brand)=>brand._id);
         const products = await Product.find(
