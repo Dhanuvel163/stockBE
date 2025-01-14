@@ -17,7 +17,7 @@ const PurchaseSchema = new mongoose.Schema({
     ref: 'Superstocking',
     type: mongoose.Schema.Types.ObjectId,
   },
-  purchase_data: Date
+  purchase_date: Date
 },{
   timestamps:true
 });

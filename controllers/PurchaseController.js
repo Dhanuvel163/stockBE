@@ -18,11 +18,11 @@ exports.getPurchases = async (req, res, next) => {
 exports.updatePurchase = async (req, res, next) => {
     const {id} = req.params
     const {id:organization} = req.decoded
-    const {products,super_stocker,purchase_data} = req.body
+    const {products,super_stocker,purchase_date} = req.body
     try {
         const purchase = await Purchase.findOne({_id:id,organization});
         if (!purchase) throw {is_error: true, code: 404, message: "Purchase not found"}
-        purchase.set({products,super_stocker,purchase_data});
+        purchase.set({products,super_stocker,purchase_date});
         const update = await purchase.save();
         return res.status(200).json({
             success: true,
@@ -35,9 +35,9 @@ exports.updatePurchase = async (req, res, next) => {
 
 exports.addPurchase = async (req, res, next) => {
     try {
-        const {products,super_stocker,purchase_data} = req.body;
+        const {products,super_stocker,purchase_date} = req.body;
         const {id} = req.decoded;
-        const purchase = await Purchase.create({products,super_stocker,organization:id,purchase_data});
+        const purchase = await Purchase.create({products,super_stocker,organization:id,purchase_date});
         return res.status(201).json({
             success: true,
             data: purchase
