@@ -24,6 +24,10 @@ const SaleSchema = new mongoose.Schema({
     ref: 'Salesman',
     type: mongoose.Schema.Types.ObjectId,
   },
+  organization: {
+    ref: 'Organization',
+    type: mongoose.Schema.Types.ObjectId,
+  },
 },{
   timestamps:true
 });
