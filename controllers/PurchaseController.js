@@ -1,5 +1,6 @@
 const Purchase = require('../models/Purchase');
-const {handleError} = require('../helpers/error')
+const {handleError} = require('../helpers/error');
+const Product = require('../models/Product');
 
 exports.getPurchases = async (req, res, next) => {
     const {id} = req.decoded
@@ -38,6 +39,14 @@ exports.addPurchase = async (req, res, next) => {
         const {products,super_stocker,purchase_date} = req.body;
         const {id} = req.decoded;
         const purchase = await Purchase.create({products,super_stocker,organization:id,purchase_date});
+        await Promise.all(products.map(async(product)=>{
+            const db_product = await Product.findOne({_id:product.product,organization:id})
+            if(db_product){
+                const stock = db_product.stock + product.units
+                db_product.set({stock});
+                await db_product.save();
+            }
+        }))
         return res.status(201).json({
             success: true,
             data: purchase
