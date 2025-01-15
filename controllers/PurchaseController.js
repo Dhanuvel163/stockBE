@@ -23,6 +23,15 @@ exports.updatePurchase = async (req, res, next) => {
     try {
         const purchase = await Purchase.findOne({_id:id,organization});
         if (!purchase) throw {is_error: true, code: 404, message: "Purchase not found"}
+        await Promise.all(products.map(async(product)=>{
+            const db_product = await Product.findOne({_id:product.product,organization:id})
+            const prev_purchase_product = purchase.products?.find((product)=>product.product === product.product)
+            if(db_product && prev_purchase_product){
+                const stock = db_product.stock + product.units - prev_purchase_product.units
+                db_product.set({stock});
+                await db_product.save();
+            }
+        }))
         purchase.set({products,super_stocker,purchase_date});
         const update = await purchase.save();
         return res.status(200).json({
