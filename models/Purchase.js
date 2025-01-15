@@ -14,7 +14,7 @@ const PurchaseSchema = new mongoose.Schema({
     rate_with_gst: mongoose.Schema.Types.Number,
   }],
   super_stocker: {
-    ref: 'Superstocking',
+    ref: 'Superstocker',
     type: mongoose.Schema.Types.ObjectId,
   },
   organization: {
