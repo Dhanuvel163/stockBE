@@ -19,7 +19,11 @@ const ProductSchema = new mongoose.Schema({
   stock: {
     default: 0,
     type: mongoose.Schema.Types.Number,
-  }
+  },
+  organization: {
+    ref: 'Organization',
+    type: mongoose.Schema.Types.ObjectId,
+  },
 },{
   timestamps:true
 });
