@@ -31,7 +31,7 @@ exports.updatePurchase = async (req, res, next) => {
         if (!purchase) throw {is_error: true, code: 404, message: "Purchase not found"}
         await Promise.all(products.map(async(product)=>{
             const db_product = await Product.findOne({_id:product.product,organization:id})
-            const prev_purchase_product = purchase.products?.find((product)=>product.product === product.product)
+            const prev_purchase_product = purchase.products?.find((prod)=>prod.product === product.product)
             if(db_product && prev_purchase_product){
                 const stock = parseInt(db_product.stock) + parseInt(product.units) - parseInt(prev_purchase_product.units)
                 db_product.set({stock});
