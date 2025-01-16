@@ -33,7 +33,7 @@ exports.updatePurchase = async (req, res, next) => {
             const db_product = await Product.findOne({_id:product.product,organization:id})
             const prev_purchase_product = purchase.products?.find((product)=>product.product === product.product)
             if(db_product && prev_purchase_product){
-                const stock = db_product.stock + product.units - prev_purchase_product.units
+                const stock = parseInt(db_product.stock) + parseInt(product.units) - parseInt(prev_purchase_product.units)
                 db_product.set({stock});
                 await db_product.save();
             }
@@ -57,7 +57,7 @@ exports.addPurchase = async (req, res, next) => {
         await Promise.all(products.map(async(product)=>{
             const db_product = await Product.findOne({_id:product.product,organization:id})
             if(db_product){
-                const stock = db_product.stock + product.units
+                const stock = parseInt(db_product.stock) + parseInt(product.units)
                 db_product.set({stock});
                 await db_product.save();
             }
