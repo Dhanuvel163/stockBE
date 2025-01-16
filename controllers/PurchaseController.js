@@ -1,11 +1,17 @@
 const Purchase = require('../models/Purchase');
 const {handleError} = require('../helpers/error');
 const Product = require('../models/Product');
+const moment = require('moment')
 
 exports.getPurchases = async (req, res, next) => {
     const {id} = req.decoded
+    const {super_stocker,purchase_date} = req.body
     try {
-        const purchases = await Purchase.find({organization: id}).populate('super_stocker').populate('products.product');
+        const purchases = await Purchase.find({
+            organization: id,
+            ...(super_stocker ? { super_stocker } : {}),
+            ...(purchase_date ? { purchase_date: moment(purchase_date,"YYYY-MM-DD").toDate() } : {})
+        }).populate('super_stocker').populate('products.product');
         return res.status(200).json({
             success: true,
             count: purchases.length,
