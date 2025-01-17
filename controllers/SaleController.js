@@ -4,10 +4,15 @@ const Product = require('../models/Product');
 
 exports.getSales = async (req, res, next) => {
     const {id} = req.decoded
+    const {shop,sales_date,salesman} = req.body
     try {
-        const sales = await Sale.find({organization: id})
-                        .populate('shop').populate('salesman')
-                        .populate('organization').populate('products.product');
+        const sales = await Sale.find({
+            organization: id,
+            ...(shop ? { shop } : {}),
+            ...(salesman ? { salesman } : {}),
+            ...(sales_date ? { sales_date: moment(sales_date,"YYYY-MM-DD").toDate() } : {})
+        }).populate('shop').populate('salesman')
+        .populate('organization').populate('products.product');
         return res.status(200).json({
             success: true,
             count: sales.length,
@@ -21,7 +26,7 @@ exports.getSales = async (req, res, next) => {
 exports.updateSale = async (req, res, next) => {
     const {id} = req.params
     const {id:organization} = req.decoded
-    const {products,shop,salesman} = req.body
+    const {products,shop,salesman,sales_date} = req.body
     try {
         const sale = await Sale.findOne({_id:id,organization});
         if (!sale) throw {is_error: true, code: 404, message: "Sale not found"}
@@ -34,7 +39,7 @@ exports.updateSale = async (req, res, next) => {
                 await db_product.save();
             }
         }))
-        sale.set({products,shop,salesman});
+        sale.set({products,shop,salesman,sales_date});
         const update = await sale.save();
         return res.status(200).json({
             success: true,
@@ -47,9 +52,9 @@ exports.updateSale = async (req, res, next) => {
 
 exports.addSale = async (req, res, next) => {
     try {
-        const {products,shop,salesman} = req.body;
+        const {products,shop,salesman,sales_date} = req.body;
         const {id} = req.decoded;
-        const sale = await Sale.create({products,shop,salesman,organization:id});
+        const sale = await Sale.create({products,shop,salesman,organization:id,sales_date});
         await Promise.all(products.map(async(product)=>{
             const db_product = await Product.findOne({_id:product.product,organization:id})
             if(db_product){

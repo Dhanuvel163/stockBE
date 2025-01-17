@@ -28,6 +28,7 @@ const SaleSchema = new mongoose.Schema({
     ref: 'Organization',
     type: mongoose.Schema.Types.ObjectId,
   },
+  sales_date: Date
 },{
   timestamps:true
 });
