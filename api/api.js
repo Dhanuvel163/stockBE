@@ -64,7 +64,8 @@ router.route('/getPurchases')
 router.route('/updateSale/:id')
     .put(auth,updateSale);
 router.route('/sale')
-    .get(auth,getSales)
     .post(auth,addSale);
+router.route('/getSales')
+    .post(auth,getSales)
 
 module.exports = router;
