@@ -18,7 +18,7 @@ exports.getProductsByBrand = async (req, res, next) => {
 
 exports.getProducts = async (req, res, next) => {
     const {id} = req.decoded
-    const {name,brand} = req.body
+    const {name,brand,in_stock} = req.body
     try {
         const brands = (await Brand.find(
             {
@@ -30,6 +30,7 @@ exports.getProducts = async (req, res, next) => {
             {
                 brand: {"$in":brands},
                 ...(name ? { name: { $regex: `.*${name}.*`, $options: 'i' } } : {}),
+                ...(!!in_stock ? { stock: { $gt: 0 } } : {}),
             }
         ).populate("brand");
         return res.status(200).json({
