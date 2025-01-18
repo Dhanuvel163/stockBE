@@ -13,6 +13,7 @@ const SaleSchema = new mongoose.Schema({
     sell_cgst_percent: mongoose.Schema.Types.Number,
     sell_sgst_percent: mongoose.Schema.Types.Number,
     sell_rate_with_gst: mongoose.Schema.Types.Number,
+    profit_percent: mongoose.Schema.Types.Number,
     sell_discount_percent: mongoose.Schema.Types.Number,
     total_sell_rate: mongoose.Schema.Types.Number,
   }],
