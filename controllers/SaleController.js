@@ -1,6 +1,7 @@
 const Sale = require('../models/Sale');
 const {handleError} = require('../helpers/error');
 const Product = require('../models/Product');
+const moment = require('moment')
 
 exports.getSales = async (req, res, next) => {
     const {id} = req.decoded
