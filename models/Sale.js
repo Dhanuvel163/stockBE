@@ -30,8 +30,9 @@ const SaleSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
   },
   sales_date: Date,
-  total_discount: mongoose.Schema.Types.Number,
   total_sell_rate: mongoose.Schema.Types.Number,
+  total_discount: mongoose.Schema.Types.Number,
+  net_total_sell_rate: mongoose.Schema.Types.Number,
 },{
   timestamps:true
 });
