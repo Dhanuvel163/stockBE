@@ -21,7 +21,7 @@ exports.updateSalesman = async (req, res, next) => {
     const {name,contact} = req.body
     try {
         const salesmanWithContact = await Salesman.findOne({contact,organization,_id:{$ne:id}});
-        if(salesmanWithContact) throw {is_error: true, code: 400, message: "Salesman with contact already present"}
+        if(salesmanWithContact && !!contact) throw {is_error: true, code: 400, message: "Salesman with contact already present"}
         const salesman = await Salesman.findOne({_id:id,organization});
         if (!salesman) throw {is_error: true, code: 404, message: "Salesman not found"}
         salesman.set({name,contact});
@@ -40,7 +40,7 @@ exports.addSalesman = async (req, res, next) => {
         const {name,contact} = req.body;
         const {id} = req.decoded;
         const salesmanWithContact = await Salesman.findOne({contact,organization:id});
-        if(salesmanWithContact) throw {is_error: true, code: 400, message: "Salesman with contact already present"}
+        if(salesmanWithContact && !!contact) throw {is_error: true, code: 400, message: "Salesman with contact already present"}
         const salesman = await Salesman.create({name,contact,organization:id});
         return res.status(201).json({
             success: true,
