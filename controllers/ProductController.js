@@ -29,7 +29,7 @@ exports.getProducts = async (req, res, next) => {
         const products = await Product.find(
             {
                 brand: {"$in":brands},
-                ...(name ? { name: { $regex: new RegExp(name, "i"), $options: 'i' } } : {}),
+                ...(name ? { name: { $regex: new RegExp(name, "i") } } : {}),
                 ...(!!in_stock ? { stock: { $gt: 0 } } : {}),
             }
         ).populate("brand");
