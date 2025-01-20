@@ -17,9 +17,18 @@ const OrganizationSchema = new mongoose.Schema({
     unique: true
   },
   gstin: String,
-  drug_license_no: String,
-  food_license_no: String,
-  contact: String,
+  drug_license_no: {
+    type: String,
+    unique: true
+  },
+  food_license_no: {
+    type: String,
+    unique: true
+  },
+  contact: {
+    type: String,
+    unique: true
+  },
   address: String,
   password: String,
 },{

@@ -41,8 +41,16 @@ exports.createOrganization = async (req, res, next) => {
             drug_license_no, food_license_no, contact, address
         } = req.body
     
-        const organization = await Organization.findOne({email});
+        let organization = await Organization.findOne({email});
         if(organization) throw {is_error: true, code: 400, message: "Organization already present for the email"}
+        organization = await Organization.findOne({bill_prefix});
+        if(organization) throw {is_error: true, code: 400, message: "Bill Prefix is already taken"}
+        organization = await Organization.findOne({drug_license_no});
+        if(organization) throw {is_error: true, code: 400, message: "Food License Number is already taken"}
+        organization = await Organization.findOne({food_license_no});
+        if(organization) throw {is_error: true, code: 400, message: "Drug License Number is already taken"}
+        organization = await Organization.findOne({contact});
+        if(organization) throw {is_error: true, code: 400, message: "Organization already present for the mobile number"}
         let new_organization = Organization.create({
             name, email, password, bill_prefix, gstin, drug_license_no,
             drug_license_no, food_license_no, contact, address
