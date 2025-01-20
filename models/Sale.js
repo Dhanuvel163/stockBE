@@ -43,8 +43,8 @@ const SaleSchema = new mongoose.Schema({
 SaleSchema.pre('save', async function (next) {
   const doc = this;
   try {
-    const organization = await Organization.findOne({_id: doc.organization})
-    const counter = await Counter.findByIdAndUpdate({ _id: doc.organization }, { $inc: { seq: 1 } }, { new: true, upsert: true })
+    const organization = await Organization.findOne({_id: doc.organization?.toString()})
+    const counter = await Counter.findByIdAndUpdate({ _id: doc.organization?.toString() }, { $inc: { seq: 1 } }, { new: true, upsert: true })
     doc.invoice = `${organization.bill_prefix}${counter.seq}`;
     next();
   } catch (error) {
