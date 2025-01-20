@@ -18,7 +18,7 @@ exports.getProductsByBrand = async (req, res, next) => {
 
 exports.getProducts = async (req, res, next) => {
     const {id} = req.decoded
-    const {name,brand,in_stock} = req.body
+    let {name,brand,in_stock} = req.body
     try {
         const brands = (await Brand.find(
             {
@@ -26,6 +26,8 @@ exports.getProducts = async (req, res, next) => {
                 ...(brand ? { _id:brand } : {})
             },'_id')
         )?.map((brand)=>brand._id);
+        console.log({name})
+        if(name=="\\") name="\\\\"
         const products = await Product.find(
             {
                 brand: {"$in":brands},
